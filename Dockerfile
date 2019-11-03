@@ -1,17 +1,24 @@
-FROM asdlfkj31h/debian-novnc
+FROM debian 
+#ubuntu:bionic
 
-# set user to 1000 - further installations with user 0
-USER 0
+ENV HOME /root
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
-#RUN apt-get install -y vim
-RUN dpkg --add-architecture i386 
-RUN wget -qO - https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -
-RUN echo deb https://dl.winehq.org/wine-builds/debian/ buster main >> /etc/apt/sources.list
-RUN apt-get update
+RUN dpkg --add-architecture i386
+RUN apt-get update && apt-get -y install xvfb x11vnc xdotool wget tar supervisor wine32-development net-tools fluxbox
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-USER 1000
+ENV WINEPREFIX /root/prefix32
+ENV WINEARCH win32
+ENV DISPLAY :0
 
-# Startup
-#ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
-#CMD ["/usr/bin/xeyes"]
+WORKDIR /root/
+RUN wget -O - https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar -xzv -C /root/ && mv /root/noVNC-1.1.0 /root/novnc && ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
+RUN wget -O - https://github.com/novnc/websockify/archive/v0.8.0.tar.gz | tar -xzv -C /root/ && mv /root/websockify-0.8.0 /root/novnc/utils/websockify
 
+EXPOSE 8080
+
+CMD ["/usr/bin/supervisord"]
