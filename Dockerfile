@@ -1,5 +1,4 @@
 FROM debian 
-#ubuntu:bionic
 
 ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
