@@ -1,4 +1,4 @@
-FROM debian 
+FROM debian:buster-slim
 
 ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
