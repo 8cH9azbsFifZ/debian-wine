@@ -1,5 +1,7 @@
 FROM debian:buster-slim
 
+MAINTAINER Gerolf Ziegenhain <gerolf.ziegenhain@gmail.com>
+
 ENV HOME /root
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
