@@ -21,6 +21,7 @@ In your web browser you should see the default application, explorer.exe:
 ## Modifying
 
 Create a new Dockerfile for your application, modify supervisord.conf for starting your application:
+
     FROM asdlfkj31h/debian-wine:0.3
     ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
     ADD <STUFF_HERE> /install 
